@@ -1,0 +1,34 @@
+
+<form data-ng-submit="cholloHandlerVM.functions.cholloHandlerSwitcher()"
+	class="chollo-indv">
+	<div class="box border shadow-sm p-3 mb-5" data-ng-hide="cholloHandlerVM.functions.where('/deleteChollo/'+cholloHandlerVM.chollo.id)">
+		<span class="label label-default">Title: </span>
+		<div>
+			<input type="text" class="form-control input-lg" name="title"
+				data-ng-model="cholloHandlerVM.newChollo.title">
+		</div>
+		<br> <span class="label label-default">Description: </span>
+		<div>
+			<input type="text" class="form-control input-lg" name="description"
+				data-ng-model="cholloHandlerVM.newChollo.description">
+		</div>
+		<br> <span class="label label-info">Link: </span>
+		<div>
+			<input type="url" class="form-control input-lg" name="link"
+				data-ng-model="cholloHandlerVM.newChollo.link">
+		</div>
+		<br>
+	</div>
+	<div class="form-group">
+		<div>
+			<button type="submit" class="confirmButton btn btn-success"
+				data-ng-show="cholloHandlerVM.functions.where('/insertChollo')">CREATE</button>
+			<button type="submit" class="confirmButton btn btn-success"
+				data-ng-show="cholloHandlerVM.functions.where('/editChollo/'+cholloHandlerVM.chollo.id)">EDIT
+				CHOLLO</button>
+			<button type="submit" class="confirmButton btn btn-success"
+				data-ng-show="cholloHandlerVM.functions.where('/deleteChollo/'+cholloHandlerVM.chollo.id)">DELETE
+				CHOLLO</button>
+		</div>
+	</div>
+</form>

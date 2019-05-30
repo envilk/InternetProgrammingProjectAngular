@@ -1,0 +1,53 @@
+.navbar-flex {
+	display: flex;
+	justify-content: flex-end;
+	padding-right: 20px;
+}
+
+.contanier-flex {
+	display: flex;
+	justify-content: flex-start;
+	padding-right: 10px;
+}
+
+.navbar-back {
+	background-color: #efefef;
+}
+
+.chollo {
+	margin: 30px 15px 30px 30px;
+}
+
+.confirmButton {
+	margin-top: 15px;
+	margin-left: 15px;
+}
+
+.box {
+	width: 200px;
+	display: grid;
+}
+
+.flex-container {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.chollo-indv {
+	margin: 30px 15px 30px 15px;
+	padding: 10px 15px 15px 15px;
+	background-color: white;
+}
+
+.chollo-logo {
+	width: 100px;
+	height: 100px;
+}
+
+img.desaturate {
+	filter: grayscale(100%);
+}
+
+#access {
+	margin-left: 10px;
+}
