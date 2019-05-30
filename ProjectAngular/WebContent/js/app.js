@@ -55,5 +55,10 @@ angular.module('chollosApp', ['ngRoute'])
 		controller: "listCtrl",
 		controllerAs: "listVM",
 		templateUrl: "./pages/chollosTemplate.html",
+	})
+	.when("/setSoldout/:ID", {
+		controller: "chollosUserCtrl",
+		controllerAs: "chollosUserVM",
+		templateUrl: "./pages/chollosUser.html"
 	});
 })

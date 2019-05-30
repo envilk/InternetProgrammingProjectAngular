@@ -49,6 +49,13 @@ angular.module('chollosApp')
 					return response.status;
 				});
 			}, 
+			postCholloSoldout: function(cholloid){
+				var urlid = url+'soldout/'+cholloid;
+				return $http.put(urlid, cholloid)
+				.then(function(response){
+					return response.status;
+				}); 
+			},
 			deleteChollo : function(id){
 				var urlid = url+id;
 				return $http.delete(urlid)

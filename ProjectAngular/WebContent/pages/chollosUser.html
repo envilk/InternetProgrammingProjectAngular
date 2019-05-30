@@ -31,14 +31,17 @@
 						</div>
 					</div>
 					<div data-ng-switch-default>
-						<div class="contanier-flex">likes
-							<a>&#128402;</a>
+						<div class="contanier-flex">
+							likes <a>&#128402;</a>
 							<p>{{chollo.likes}}</p>
 						</div>
 					</div>
 				</div>
 			</div>
-
+			<div>
+				<a data-ng-href="#!/setSoldout/{{chollo.id}}"><button
+						class="form-control btn btn-outline-success" type="submit">SET AS AVAILABLE</button></a>
+			</div>
 			<div>
 				<p>SOLDOUT</p>
 			</div>
@@ -80,7 +83,10 @@
 					</div>
 				</div>
 			</div>
-
+			<div>
+				<a data-ng-href="#!/setSoldout/{{chollo.id}}"><button
+						class="form-control btn btn-dark" type="submit">SET AS SOLDOUT</button></a>
+			</div>
 			<!-- <div class="contanier-flex">
 				<a data-toggle="modal" data-target="#ModalLoginForm"><button
 						type="submit">&#128077;</button></a>

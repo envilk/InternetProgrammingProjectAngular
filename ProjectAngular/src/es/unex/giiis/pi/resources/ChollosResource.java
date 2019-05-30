@@ -241,7 +241,45 @@ public class ChollosResource {
 		return response;
 	}
 
+	
+	
+	@PUT
+	@Path("/soldout/{cholloid: [0-9]+}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response putSoldout(
+			@Context HttpServletRequest request, 
+			@PathParam("cholloid") long cholloid) throws Exception{
+		Connection conn = (Connection)sc.getAttribute("dbConn");
+		CholloDAO cholloDao = new JDBCCholloDAOImpl();
+		cholloDao.setConnection(conn);
 
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+
+		Response response = null;
+		//We check that the chollo exists
+		Chollo chollo = cholloDao.get(cholloid);
+		if(chollo.getSoldout() == 0)
+			chollo.setSoldout(1);
+		else
+			chollo.setSoldout(0);
+		
+		if ((chollo != null)
+				&&((user.getId() == chollo.getIdu()))){
+			if (chollo.getId()!=cholloid) throw new CustomBadRequestException("Error in id");
+			else 
+			{
+				Map<String, String> messages = new HashMap<String, String>();
+				if (chollo.validate(messages)) cholloDao.save(chollo);						
+				else throw new CustomBadRequestException("Errors in parameters");						
+			}
+		}
+		else throw new WebApplicationException(Response.Status.NOT_FOUND);			
+
+		return response;
+	}
+
+	
 
 
 	@DELETE

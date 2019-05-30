@@ -89,6 +89,7 @@ public class UsersResource {
 			throw new CustomBadRequestException("Errors in parameters");
 		else {  //save chollo in DB
 			id = userDao.add(newUser);
+			newUser = userDao.getUsername(newUser.getUsername());
 			HttpSession session = request.getSession();
 			session.setAttribute("user", newUser);
 		}
