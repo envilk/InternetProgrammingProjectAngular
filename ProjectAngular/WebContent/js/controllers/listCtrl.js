@@ -3,7 +3,6 @@ angular.module('chollosApp')
 	var listViewModel = this;
 	listViewModel.chollos=[];
 	listViewModel.cholloId={}
-	console.log("HERE1")
 	listViewModel.functions = {
 		where : function(route){
 			return $location.path() == route;
@@ -45,8 +44,6 @@ angular.module('chollosApp')
 			})
 		},
 		createLike : function(cholloId) {
-			console.log("HERE2")
-			console.log(cholloId)
 			likesFactory.postLike(cholloId)
 			.then(function(response){
 				console.log("Liked chollo: "+cholloId);
@@ -56,17 +53,13 @@ angular.module('chollosApp')
 		}
 	}
 	var str = $location.path();
-	console.log("HERE3")
-	console.log(str)
 	if (str.includes("/search")){
 		var array = str.split("/");
-		console.log(array[2])
 		listViewModel.functions.readChollosBySearch(array[2]);
 		$location.path('/search/'+array[2]);
 	}
 	if (str.includes("/likes/")){
 		var array = str.split("/");
-		console.log(array[2])
 		listViewModel.functions.createLike(array[2]);
 		$location.path('/');
 	}

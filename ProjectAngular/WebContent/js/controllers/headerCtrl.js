@@ -6,7 +6,7 @@ angular.module('chollosApp')
 			username: "", //This variable is for registering in the html form a new user, and I use this and not the user variable 
 			email: "",					   //because user would not have defined and I couldnt use user.username, user.email and user.password
 			password:""};
-	headerViewModel.passwordConf={};
+	headerViewModel.passwordConf="";
 	headerViewModel.functions = {
 			readUser : function() {
 				usersFactory.getUser()

@@ -31,7 +31,7 @@ import es.unex.giiis.pi.model.User;
 
 @Path("/likes")
 public class LikesResource {
-	
+
 	private static final Logger logger = Logger.getLogger(HttpServlet.class.getName());
 
 	@Context
@@ -44,39 +44,39 @@ public class LikesResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response post(@Context HttpServletRequest request, String cholloId) throws Exception {	
 		Connection conn = (Connection) sc.getAttribute("dbConn");
-		
+
 		CholloDAO cholloDao = new JDBCCholloDAOImpl();
 		cholloDao.setConnection(conn);	  	 
 
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
-		
-		LikesDAO likesDao = new JDBCLikesDAOImpl();
-		likesDao.setConnection(conn);
-		int idu, idc;
-		idu = (int) user.getId();
-		idc = Integer.parseInt(cholloId);
-		logger.info("----------------------- user: "+idu+"   chollo: "+idc);
-		
-		Like like = new Like();
-		like.setIdu(idu);
-		like.setIdc(idc);
-		
-		Chollo chollo = cholloDao.get(idc);
 
-		if(likesDao.isLike(idu, idc)){
-			logger.info("----------------ARRIVES IF-------------------");
-			likesDao.delete(idu, idc);
-			chollo.setLikes(chollo.getLikes()-1);
+		if(user != null) {
+			LikesDAO likesDao = new JDBCLikesDAOImpl();
+			likesDao.setConnection(conn);
+			int idu, idc;
+			idu = (int) user.getId();
+			idc = Integer.parseInt(cholloId);
+			logger.info("----------------------- user: "+idu+"   chollo: "+idc);
+
+			Like like = new Like();
+			like.setIdu(idu);
+			like.setIdc(idc);
+
+			Chollo chollo = cholloDao.get(idc);
+			if(likesDao.isLike(idu, idc)){
+				logger.info("----------------ARRIVES IF-------------------");
+				likesDao.delete(idu, idc);
+				chollo.setLikes(chollo.getLikes()-1);
+			}
+			else {
+				logger.info("----------------ARRIVES ELSE-------------------");
+				likesDao.add(like);
+				chollo.setLikes(chollo.getLikes()+1);
+			}
+
+			cholloDao.save(chollo);
 		}
-		else {
-			logger.info("----------------ARRIVES ELSE-------------------");
-			likesDao.add(like);
-			chollo.setLikes(chollo.getLikes()+1);
-		}
-		
-		cholloDao.save(chollo);
-		
 		Response res;
 
 		res = Response //return 201 and Location: /likes/newid

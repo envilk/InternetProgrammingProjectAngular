@@ -146,7 +146,7 @@ public class ChollosResource {
 
 		Map<String, String> messages = new HashMap<String, String>();
 
-		if ((!newChollo.validate(messages)))
+		if ((!newChollo.validate(messages)) || user == null)
 			throw new CustomBadRequestException("Errors in parameters");
 		//save chollo in DB
 		newChollo.setIdu(user.getId());

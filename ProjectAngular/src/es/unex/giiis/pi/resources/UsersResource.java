@@ -60,12 +60,13 @@ public class UsersResource {
 		userDao.setConnection(conn);
 
 		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
 
 		Response response = null;
 
 		//We check that the user exists
 		Map<String, String> messages = new HashMap<String, String>();
-		if (newUser.validateName(messages)) {
+		if (newUser.validateName(messages) && user != null) {
 			userDao.save(newUser);
 			session.setAttribute("user", newUser);
 		}
@@ -80,17 +81,20 @@ public class UsersResource {
 		Connection conn = (Connection) sc.getAttribute("dbConn");
 		UserDAO userDao = new JDBCUserDAOImpl();
 		userDao.setConnection(conn);
-
+			
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		
 		Response res;
 
 		Map<String, String> messages = new HashMap<String, String>();
 		long id;
-		if ((!newUser.validateName(messages)) || (userDao.getUsername(newUser.getUsername()) != null))//An user can have same email but not same username
+		if ((!newUser.validateName(messages)) || (userDao.getUsername(newUser.getUsername()) != null)
+				|| user == null)//An user can have same email but not same username
 			throw new CustomBadRequestException("Errors in parameters");
 		else {  //save chollo in DB
 			id = userDao.add(newUser);
 			newUser = userDao.getUsername(newUser.getUsername());
-			HttpSession session = request.getSession();
 			session.setAttribute("user", newUser);
 		}
 
@@ -117,9 +121,9 @@ public class UsersResource {
 		User user = (User) session.getAttribute("user");
 
 		User returnUser = userDao.get(user.getId());
-		if(returnUser != null) { 
+		if(returnUser != null && user != null) { 
 			userDao.delete(returnUser.getId());
-			session.removeAttribute("user");
+			session.invalidate();
 			return Response.noContent().build(); //204 no content
 		}
 		else throw new CustomBadRequestException("Error in user or id");	

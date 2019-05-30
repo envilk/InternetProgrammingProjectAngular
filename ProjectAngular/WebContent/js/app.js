@@ -11,7 +11,7 @@ angular.module('chollosApp', ['ngRoute'])
 			// Extracted from script.js used as example on https://docs.angularjs.org/api/ngRoute/service/$route
 			delay: function($q, $timeout) {
 				var delay = $q.defer();
-				$timeout(delay.resolve, 50);
+				$timeout(delay.resolve, 250);
 				return delay.promise;
 			}
 		}
