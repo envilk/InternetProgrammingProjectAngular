@@ -84,6 +84,28 @@ public class Chollo {
 		this.idu = idu;
 	}
 
+	@Override
+	public boolean equals(Object o) 
+	{
+		// If the object is compared with itself then return true   
+		if (o == this) { 
+			return true; 
+		} 
+
+		/* Check if o is an instance of Complex or not 
+          "null instanceof [type]" also returns false */
+		if (!(o instanceof Chollo)) { 
+			return false; 
+		} 
+
+		// typecast o to Complex so that we can compare data members  
+		Chollo c = (Chollo) o; 
+
+		// Compare the data members and return accordingly  
+		return Long.compare(id, c.id) == 0
+				&& Double.compare(id, c.id) == 0; 
+	}
+
 
 
 }

@@ -89,10 +89,10 @@ public class UsersResource {
 
 		Map<String, String> messages = new HashMap<String, String>();
 		long id;
-		if ((!newUser.validateName(messages)) || (userDao.getUsername(newUser.getUsername()) != null)
-				|| user == null)//An user can have same email but not same username
+		
+		if ((!newUser.validateName(messages)) || (userDao.getUsername(newUser.getUsername()) != null))//An user can have same email but not same username
 			throw new CustomBadRequestException("Errors in parameters");
-		else {  //save chollo in DB
+		else {  
 			id = userDao.add(newUser);
 			newUser = userDao.getUsername(newUser.getUsername());
 			session.setAttribute("user", newUser);

@@ -1,21 +1,28 @@
 
 <form data-ng-submit="cholloHandlerVM.functions.cholloHandlerSwitcher()"
 	class="chollo-indv">
-	<div class="box border shadow-sm p-3 mb-5" data-ng-hide="cholloHandlerVM.functions.where('/deleteChollo/'+cholloHandlerVM.chollo.id)">
+	<div class="box border shadow-sm p-3 mb-5"
+		data-ng-hide="cholloHandlerVM.functions.where('/deleteChollo/'+cholloHandlerVM.chollo.id)">
 		<span class="label label-default">Title: </span>
 		<div>
 			<input type="text" class="form-control input-lg" name="title"
 				data-ng-model="cholloHandlerVM.newChollo.title">
+				<label class="few-chars" data-ng-show="cholloHandlerVM.functions.where('/editChollo/'+cholloHandlerVM.chollo.id)">
+				Title {{cholloHandlerVM.chollo.title}}</label>
 		</div>
 		<br> <span class="label label-default">Description: </span>
 		<div>
 			<input type="text" class="form-control input-lg" name="description"
-				data-ng-model="cholloHandlerVM.newChollo.description">
+				data-ng-model="cholloHandlerVM.newChollo.description"> 
+				<label class="few-chars" data-ng-show="cholloHandlerVM.functions.where('/editChollo/'+cholloHandlerVM.chollo.id)">
+				Description: {{cholloHandlerVM.chollo.description}}</label>
 		</div>
 		<br> <span class="label label-info">Link: </span>
 		<div>
 			<input type="url" class="form-control input-lg" name="link"
 				data-ng-model="cholloHandlerVM.newChollo.link">
+				<label class="few-chars" data-ng-show="cholloHandlerVM.functions.where('/editChollo/'+cholloHandlerVM.chollo.id)">
+				Link: {{cholloHandlerVM.chollo.link}}</label>
 		</div>
 		<br>
 	</div>

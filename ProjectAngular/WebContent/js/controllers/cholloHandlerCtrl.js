@@ -44,6 +44,7 @@ angular.module('chollosApp')
 				cholloHandlerViewModel.chollo.title = cholloHandlerViewModel.newChollo.title
 				cholloHandlerViewModel.chollo.description = cholloHandlerViewModel.newChollo.description
 				cholloHandlerViewModel.chollo.link = cholloHandlerViewModel.newChollo.link
+				console.log(cholloHandlerViewModel.chollo)
 				chollosFactory.postChollo(cholloHandlerViewModel.chollo)
 				.then(function(response){
 					console.log("Creating chollo. Response:", response);

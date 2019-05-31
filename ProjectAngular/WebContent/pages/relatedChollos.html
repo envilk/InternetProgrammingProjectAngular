@@ -1,0 +1,192 @@
+<!-- CHOLLOS SHOW -->
+<div class="row">
+
+	<div class="col-lg-8">
+		<div class="card border shadow-sm p-3 mb-5 mr-3 mt-3 ml-3 bg-white rounded">
+			<div data-ng-switch="listVM.viewChollo.soldout">
+				<div data-ng-switch-when="1">
+					<div>
+						<img class="chollo-logo desaturate"
+							src="https://thumbs.dreamstime.com/b/vector-trendy-minimal-flat-design-special-offer-sign-geometric-circle-banners-vivid-transparent-retro-poster-s-style-vintage-pink-102438651.jpg">
+					</div>
+					<div>
+						<a href="listVM.viewChollo.link"><button
+								class="form-control btn-default col-sm-2" type="submit">SEE
+								CHOLLO</button></a>
+					</div>
+					<div>
+						<h4>{{listVM.viewChollo.title}}</h4>
+					</div>
+					<div>
+						<h4>{{listVM.viewChollo.description}}</h4>
+					</div>
+					<div>
+						<p>{{listVM.viewChollo.description}}</p>
+					</div>
+
+					<!-- Likes part that checks if a user is undefined or not to show one modal or the another one -->
+					<div data-ng-controller="headerCtrl as headerVM">
+						<div data-ng-switch="headerVM.user.username">
+							<div data-ng-switch-when="undefined">
+								<div class="contanier-flex">
+									<a data-toggle="modal" data-target="#ModalLoginForm"><button
+											type="submit">&#128402;</button></a>
+									<p>{{listVM.viewChollo.likes}}</p>
+								</div>
+							</div>
+							<div data-ng-switch-default>
+								<div class="contanier-flex">
+									<a data-ng-href="#!/likes/{{listVM.viewChollo.id}}"><button
+											type="submit">&#128402;</button></a>
+									<p>{{listVM.viewChollo.likes}}</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div>
+						<p>SOLDOUT</p>
+					</div>
+				</div>
+				<div data-ng-switch-when="0">
+					<div>
+						<img class="chollo-logo"
+							src="https://thumbs.dreamstime.com/b/vector-trendy-minimal-flat-design-special-offer-sign-geometric-circle-banners-vivid-transparent-retro-poster-s-style-vintage-pink-102438651.jpg">
+					</div>
+					<div>
+						<a href={{listVM.viewChollo.link}}><button
+								class="form-control btn btn-success col-sm-2" type="submit">SEE
+								CHOLLO</button></a>
+					</div>
+					<div>
+						<h4>{{listVM.viewChollo.title}}</h4>
+					</div>
+					<div>
+						<p>{{listVM.viewChollo.description}}</p>
+					</div>
+
+					<!-- Likes part that checks if a user is undefined or not to show one modal or the another one -->
+					<div data-ng-controller="headerCtrl as headerVM">
+						<div data-ng-switch="headerVM.user.username">
+							<div data-ng-switch-when="undefined">
+								<div class="contanier-flex">
+									<a data-toggle="modal" data-target="#ModalLoginForm"><button
+											type="submit">&#128077;</button></a>
+									<p>{{listVM.viewChollo.likes}}</p>
+								</div>
+							</div>
+							<div data-ng-switch-default>
+								<div class="contanier-flex">
+									<a data-ng-href="#!/likes/{{listVM.viewChollo.id}}"><button
+											type="submit">&#128077;</button></a>
+									<p>{{listVM.viewChollo.likes}}</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- <div class="contanier-flex">
+				<a data-toggle="modal" data-target="#ModalLoginForm"><button
+						type="submit">&#128077;</button></a>
+				<p>{{chollo.likes}}</p>
+			</div> -->
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div data-ng-show="listVM.relatedChollos.length != 0"
+		class="col-sm-4 bg-light border shadow-sm">
+		<h4>Related chollos</h4>
+
+		<div data-ng-repeat="chollo in listVM.relatedChollos"
+			class="card border shadow-sm p-3 mb-5 mr-3 mt-3 ml-3 bg-white rounded">
+			<div data-ng-switch="chollo.soldout">
+				<div data-ng-switch-when="1">
+					<div>
+						<img class="chollo-logo desaturate"
+							src="https://thumbs.dreamstime.com/b/vector-trendy-minimal-flat-design-special-offer-sign-geometric-circle-banners-vivid-transparent-retro-poster-s-style-vintage-pink-102438651.jpg">
+					</div>
+					<div>
+						<a href="chollo.link"><button class="form-control btn-default col-sm-6"
+								type="submit">SEE CHOLLO</button></a>
+					</div>
+					<div>
+						<h4>{{chollo.title}}</h4>
+					</div>
+
+					<!-- Likes part that checks if a user is undefined or not to show one modal or the another one -->
+					<div data-ng-controller="headerCtrl as headerVM">
+						<div data-ng-switch="headerVM.user.username">
+							<div data-ng-switch-when="undefined">
+								<div class="contanier-flex">
+									<a data-toggle="modal" data-target="#ModalLoginForm"><button
+											type="submit">&#128402;</button></a>
+									<p>{{chollo.likes}}</p>
+								</div>
+							</div>
+							<div data-ng-switch-default>
+								<div class="contanier-flex">
+									<a data-ng-href="#!/likes/{{chollo.id}}"><button
+											type="submit">&#128402;</button></a>
+									<p>{{chollo.likes}}</p>
+								</div>
+							</div>
+						</div>
+						<a data-ng-href="#!/viewChollo/{{chollo.id}}">VIEW CHOLLO</a>
+					</div>
+
+					<div>
+						<p>SOLDOUT</p>
+					</div>
+				</div>
+				<div data-ng-switch-when="0">
+					<div>
+						<img class="chollo-logo"
+							src="https://thumbs.dreamstime.com/b/vector-trendy-minimal-flat-design-special-offer-sign-geometric-circle-banners-vivid-transparent-retro-poster-s-style-vintage-pink-102438651.jpg">
+					</div>
+					<div>
+						<a data-ng-href={{chollo.link}}><button
+								class="form-control btn btn-success col-sm-6" type="submit">SEE
+								CHOLLO</button></a>
+					</div>
+					<div>
+						<h4>{{chollo.title}}</h4>
+					</div>
+
+					<!-- Likes part that checks if a user is undefined or not to show one modal or the another one -->
+					<div data-ng-controller="headerCtrl as headerVM">
+						<div data-ng-switch="headerVM.user.username">
+							<div data-ng-switch-when="undefined">
+								<div class="contanier-flex">
+									<a data-toggle="modal" data-target="#ModalLoginForm"><button
+											type="submit">&#128077;</button></a>
+									<p>{{chollo.likes}}</p>
+								</div>
+							</div>
+							<div data-ng-switch-default>
+								<div class="contanier-flex">
+									<a data-ng-href="#!/likes/{{chollo.id}}"><button
+											type="submit">&#128077;</button></a>
+									<p>{{chollo.likes}}</p>
+								</div>
+							</div>
+						</div>
+						<a data-ng-href="#!/viewChollo/{{chollo.id}}">VIEW CHOLLO</a>
+					</div>
+
+					<!-- <div class="contanier-flex">
+				<a data-toggle="modal" data-target="#ModalLoginForm"><button
+						type="submit">&#128077;</button></a>
+				<p>{{chollo.likes}}</p>
+			</div> -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<div data-ng-show="listVM.relatedChollos.length == 0"
+		class="alert alert-warning">
+		<h4>No related chollos where found</h4>
+	</div>
+
+</div>

@@ -20,6 +20,7 @@ angular.module('chollosApp')
 			registerUser : function() {
 				if(headerViewModel.passwordConf == headerViewModel.newUser.password){
 					headerViewModel.user = headerViewModel.newUser;
+					console.log(headerViewModel.user)
 					usersFactory.postUser(headerViewModel.user)
 					.then(function(response){
 						console.log("Posting user with id: ", headerViewModel.newUser.id," Response: ", response);

@@ -2,7 +2,9 @@ angular.module('chollosApp')
 .controller('listCtrl', ['chollosFactory','likesFactory','$location',function(chollosFactory, likesFactory, $location){
 	var listViewModel = this;
 	listViewModel.chollos=[];
-	listViewModel.cholloId={}
+	listViewModel.cholloId={};
+	listViewModel.viewChollo={};
+	listViewModel.relatedChollos=[];
 	listViewModel.functions = {
 		where : function(route){
 			return $location.path() == route;
@@ -50,6 +52,26 @@ angular.module('chollosApp')
 			}, function(response){
 				console.log("Error in likes");
 			})
+		},
+		viewChollo : function(cholloid) {
+			chollosFactory.getChollo(cholloid)
+			.then(function(response){
+				listViewModel.viewChollo = response;
+				console.log("Getting chollo with id: "+cholloid);
+				console.log(listViewModel.viewChollo)
+			}, function(response){
+				console.log("Error getting chollo: "+cholloid);
+			})
+		},
+		relatedChollos : function(cholloid) {
+			chollosFactory.getChollosRelated(cholloid)
+			.then(function(response){
+				listViewModel.relatedChollos = response;
+				console.log("Getting chollos by a search");
+				console.log(listViewModel.relatedChollos)
+			}, function(response){
+				console.log("Error getting chollos by a search");
+			})
 		}
 	}
 	var str = $location.path();
@@ -61,7 +83,7 @@ angular.module('chollosApp')
 	if (str.includes("/likes/")){
 		var array = str.split("/");
 		listViewModel.functions.createLike(array[2]);
-		$location.path('/');
+		$location.path('/'); 
 	}
 	if (str.includes("/orderBylikes")){
 		listViewModel.functions.readChollosOrderByLikes();
@@ -70,6 +92,12 @@ angular.module('chollosApp')
 	if (str.includes("/showAvailable")){
 		listViewModel.functions.readChollosShowAvailable();
 		$location.path('/showAvailable');
+	}
+	if (str.includes("/viewChollo")){
+		var array = str.split("/");
+		listViewModel.functions.viewChollo(array[2]);
+		listViewModel.functions.relatedChollos(array[2]);
+		$location.path('/viewChollo/'+array[2]);
 	}
 	if(str.includes("/likes/") || str == "/")
 		listViewModel.functions.readChollos();

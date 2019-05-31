@@ -5,9 +5,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
@@ -38,7 +42,7 @@ import es.unex.giiis.pi.resources.exceptions.CustomNotFoundException;
 public class ChollosResource {
 
 	private static final Logger logger = Logger.getLogger(HttpServlet.class.getName());
-	
+
 	@Context
 	ServletContext sc;
 	@Context
@@ -56,7 +60,67 @@ public class ChollosResource {
 
 		return chollos; 
 	}
-	
+
+	@GET
+	@Path("/chollosRelated/{cholloid: [0-9]+}")  
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Chollo> getChollosUserJSON(@Context HttpServletRequest request,
+			@PathParam("cholloid") long cholloid) {
+		Connection conn = (Connection) sc.getAttribute("dbConn");
+		CholloDAO cholloDao = new JDBCCholloDAOImpl();
+		cholloDao.setConnection(conn);
+
+		Chollo chollo = cholloDao.get(cholloid);
+
+		List<List<Chollo>> chollosByTitle = new LinkedList<List<Chollo>>();
+		List<List<Chollo>> chollosByDesc = new LinkedList<List<Chollo>>();
+		List<Chollo> chollos = new ArrayList<Chollo>();
+
+		//BY TITLE
+		
+		String[] parts2 = chollo.getTitle().split(" ");
+		for (String string : parts2) {
+			chollosByTitle.add(cholloDao.getAllBySearchAll(string));
+		}
+		for (List<Chollo> list : chollosByTitle) {
+			chollos.addAll(list);
+		}
+		
+		//BY DESC
+
+		String[] parts = chollo.getDescription().split(" ");
+		for (String string : parts) {
+			chollosByDesc.add(cholloDao.getAllBySearchAll(string));
+		}
+		for (List<Chollo> list : chollosByDesc) {
+			chollos.addAll(list);
+		}
+		
+		//DUPLICATES
+
+		List<Long> listWithDuplicates = new LinkedList<Long>();
+		for (Chollo aux : chollos) {
+			listWithDuplicates.add(aux.getId());
+		}
+		
+	    List<Long> listWithoutDuplicates = listWithDuplicates.stream()
+	     .distinct()
+	     .collect(Collectors.toList());
+	   
+	    for(int i=0;i<listWithoutDuplicates.size();i++) {
+	    	if(chollo.getId() == listWithoutDuplicates.get(i))
+	    		listWithoutDuplicates.remove(i);
+	    }
+	    
+	    List<Chollo> chollosRelated = new ArrayList<Chollo>();
+	    for (Long long1 : listWithoutDuplicates) {
+	    	chollosRelated.add(cholloDao.get(long1));
+		}
+
+		return chollosRelated; 
+	}
+
+
 	@GET
 	@Path("/orderBylikes/")	  
 	@Produces(MediaType.APPLICATION_JSON)
@@ -68,14 +132,14 @@ public class ChollosResource {
 		List<Chollo> chollos;
 		chollos = cholloDao.getAll();
 		Collections.sort(chollos, new Comparator<Chollo>() {
-		    public int compare(Chollo one, Chollo other) {
-		    	Integer likesOne, likesTwo;
-		    	likesOne = one.getLikes();
-		    	likesTwo = other.getLikes(); 
-		        return likesOne.compareTo(likesTwo);
-		    }
+			public int compare(Chollo one, Chollo other) {
+				Integer likesOne, likesTwo;
+				likesOne = one.getLikes();
+				likesTwo = other.getLikes(); 
+				return likesOne.compareTo(likesTwo);
+			}
 		});
-		
+
 		return chollos; 
 	}
 
@@ -94,10 +158,10 @@ public class ChollosResource {
 			if(chollo.getSoldout() == 0)//Si no esta vendido
 				chollos.add(chollo);
 		}
-		
+
 		return chollos; 
 	}
-	
+
 	@GET
 	@Path("/search/{search: [a-zA-Z0-9_]+}")	  
 	@Produces(MediaType.APPLICATION_JSON)
@@ -106,7 +170,7 @@ public class ChollosResource {
 		CholloDAO cholloDao = new JDBCCholloDAOImpl();
 		cholloDao.setConnection(conn); 
 		List<Chollo> chollos = cholloDao.getAllBySearchAll(search);
-		
+
 		return chollos; 
 	}
 
@@ -119,13 +183,9 @@ public class ChollosResource {
 		CholloDAO cholloDao = new JDBCCholloDAOImpl();
 		cholloDao.setConnection(conn);
 
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
-
 		Chollo chollo = cholloDao.get(cholloid);
 
-		if ((chollo != null)&&
-				((user.getId() == chollo.getIdu()))) 
+		if (chollo != null) 
 			return chollo;
 		else throw new CustomNotFoundException("Chollo ("+ cholloid + ") is not found");		   
 	}
@@ -141,11 +201,9 @@ public class ChollosResource {
 
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
-
 		Response res;
-
 		Map<String, String> messages = new HashMap<String, String>();
-
+		
 		if ((!newChollo.validate(messages)) || user == null)
 			throw new CustomBadRequestException("Errors in parameters");
 		//save chollo in DB
@@ -165,7 +223,7 @@ public class ChollosResource {
 		return res; 
 	}
 
-/*
+	/*
 	//POST that receives a new chollo via webform
 	@POST	  	 
 	@Consumes("application/x-www-form-urlencoded")
@@ -206,7 +264,7 @@ public class ChollosResource {
 				.build();
 		return res;  
 	}
-*/
+	 */
 
 
 	@PUT
@@ -241,8 +299,8 @@ public class ChollosResource {
 		return response;
 	}
 
-	
-	
+
+
 	@PUT
 	@Path("/soldout/{cholloid: [0-9]+}")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -263,7 +321,7 @@ public class ChollosResource {
 			chollo.setSoldout(1);
 		else
 			chollo.setSoldout(0);
-		
+
 		if ((chollo != null)
 				&&((user.getId() == chollo.getIdu()))){
 			if (chollo.getId()!=cholloid) throw new CustomBadRequestException("Error in id");
@@ -279,7 +337,7 @@ public class ChollosResource {
 		return response;
 	}
 
-	
+
 
 
 	@DELETE

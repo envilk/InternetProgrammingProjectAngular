@@ -33,6 +33,14 @@ angular.module('chollosApp')
 				var urlid = url + id;
 				return $http.get(urlid)
 				.then(function(response){
+					console.log(response)
+					return response.data;
+				});
+			},
+			getChollosRelated : function(chollosid){
+				var urlid = url + 'chollosRelated/' + chollosid;
+				return $http.get(urlid)
+				.then(function(response){
 					return response.data;
 				});
 			},

@@ -48,7 +48,7 @@
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="collapsibleNavbar">
-			<ul class="navbar-nav">
+			<ul class="navbar-nav" >
 				<li class="nav-item"><a class="nav-link"
 					data-ng-href="#!/orderBylikes">Order by likes</a></li>
 				<li class="nav-item"><a class="nav-link"
@@ -210,7 +210,7 @@
 											data-ng-model="headerVM.newUser.email">
 									</div>
 									<span class="label label-default">Current email: </span> <label
-										class="control-label">{{headerVM.user.email}}</label>
+										class="control-label few-chars">{{headerVM.user.email}}</label>
 								</div>
 								<div class="form-group">
 									<div>
@@ -218,7 +218,7 @@
 											name="password" data-ng-model="headerVM.newUser.password">
 									</div>
 									<span class="label label-default">Current password: </span> <label
-										class="control-label">{{headerVM.user.password}}</label>
+										class="control-label few-chars">{{headerVM.user.password}}</label>
 								</div>
 								<div class="form-group">
 									<div>
@@ -247,7 +247,7 @@
 	</nav>
 
 	<!-- Chollos template -->
-	<div data-ng-view class="flex-container"></div>
+	<div data-ng-view></div>
 
 </body>
 
