@@ -203,6 +203,7 @@ public class ChollosResource {
 		User user = (User) session.getAttribute("user");
 		Response res;
 		Map<String, String> messages = new HashMap<String, String>();
+		logger.info(newChollo.getImage());
 		
 		if ((!newChollo.validate(messages)) || user == null)
 			throw new CustomBadRequestException("Errors in parameters");

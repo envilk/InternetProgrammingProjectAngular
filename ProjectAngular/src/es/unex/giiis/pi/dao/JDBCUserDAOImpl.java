@@ -30,7 +30,8 @@ public class JDBCUserDAOImpl implements UserDAO {
 			user.setUsername(rs.getString("username"));
 			user.setEmail(rs.getString("email"));
 			user.setPassword(rs.getString("password"));
-			logger.info("fetching User by id: "+id+" -> "+user.getId()+" "+user.getUsername()+" "+user.getEmail()+" "+user.getPassword());
+			user.setAvatar(rs.getString("avatar"));
+			logger.info("fetching User by id: "+id+" -> "+user.getId()+" "+user.getUsername()+" "+user.getEmail()+" "+user.getPassword()+" "+user.getAvatar());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -53,7 +54,8 @@ public class JDBCUserDAOImpl implements UserDAO {
 			user.setUsername(rs.getString("username"));
 			user.setEmail(rs.getString("email"));
 			user.setPassword(rs.getString("password"));
-			logger.info("fetching User by name: "+ username + " -> "+ user.getId()+" "+user.getUsername()+" "+user.getEmail()+" "+user.getPassword());
+			user.setAvatar(rs.getString("avatar"));
+			logger.info("fetching User by name: "+ username + " -> "+ user.getId()+" "+user.getUsername()+" "+user.getEmail()+" "+user.getPassword()+" "+user.getAvatar());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -76,7 +78,8 @@ public class JDBCUserDAOImpl implements UserDAO {
 			user.setUsername(rs.getString("username"));
 			user.setEmail(rs.getString("email"));
 			user.setPassword(rs.getString("password"));
-			logger.info("fetching User by name: "+ email + " -> "+ user.getId()+" "+user.getUsername()+" "+user.getEmail()+" "+user.getPassword());
+			user.setAvatar(rs.getString("avatar"));
+			logger.info("fetching User by name: "+ email + " -> "+ user.getId()+" "+user.getUsername()+" "+user.getEmail()+" "+user.getPassword()+" "+user.getAvatar());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -100,11 +103,12 @@ public class JDBCUserDAOImpl implements UserDAO {
 				user.setId(rs.getInt("id"));
 				user.setUsername(rs.getString("username"));
 				user.setEmail(rs.getString("email"));
+				user.setAvatar(rs.getString("avatar"));
 				//user.setPassword(rs.getString("password"));
 				user.setPassword("********");//We return all users with a hidden password
 				
 				users.add(user);
-				logger.info("fetching users: "+user.getId()+" "+user.getUsername()+" "+user.getEmail()+" "+user.getPassword());
+				logger.info("fetching users: "+user.getId()+" "+user.getUsername()+" "+user.getEmail()+" "+user.getPassword()+" "+user.getAvatar());
 								
 			}
 
@@ -138,10 +142,11 @@ public class JDBCUserDAOImpl implements UserDAO {
 			
 			try {
 				stmt = conn.createStatement();
-				stmt.executeUpdate("INSERT INTO Users (username,email,password) VALUES('"
+				stmt.executeUpdate("INSERT INTO Users (username,email,password,avatar) VALUES('"
 									+user.getUsername()+"','"
 									+user.getEmail()+"','"
-									+user.getPassword()+"')");
+									+user.getPassword()+"','"
+									+user.getAvatar()+"')");
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -154,7 +159,7 @@ public class JDBCUserDAOImpl implements UserDAO {
 				id=rs.getInt("seq");
 				if (id<=lastidu) return -1;
 											
-				logger.info("CREATING User("+id+"): "+user.getUsername()+" "+user.getEmail()+" "+user.getPassword());
+				logger.info("CREATING User("+id+"): "+user.getUsername()+" "+user.getEmail()+" "+user.getPassword()+" "+user.getAvatar());
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -175,8 +180,9 @@ public class JDBCUserDAOImpl implements UserDAO {
 				stmt.executeUpdate("UPDATE users SET username='"+user.getUsername()
 									+"', email='"+user.getEmail()
 									+"', password='"+user.getPassword()
+									+"', avatar='"+user.getAvatar()
 									+"' WHERE id = "+user.getId());
-				logger.info("updating User: "+user.getId()+" "+user.getUsername()+" "+user.getEmail()+" "+user.getPassword());
+				logger.info("updating User: "+user.getId()+" "+user.getUsername()+" "+user.getEmail()+" "+user.getPassword()+" "+user.getAvatar());
 				done= true;
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

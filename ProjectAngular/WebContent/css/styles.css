@@ -18,6 +18,16 @@
 	margin: 30px 15px 30px 30px;
 }
 
+.profile {
+	width: 200px;
+	height: 200px;
+}
+
+.profile-mini {
+	width: 38px;
+	height: 38px;
+}
+
 .confirmButton {
 	margin-top: 15px;
 	margin-left: 15px;

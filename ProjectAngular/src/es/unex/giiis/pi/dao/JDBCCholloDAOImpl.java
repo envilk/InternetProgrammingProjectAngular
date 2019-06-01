@@ -29,6 +29,7 @@ public class JDBCCholloDAOImpl implements CholloDAO {
 			chollo.setId(rs.getInt("id"));
 			chollo.setTitle(rs.getString("title"));
 			chollo.setDescription(rs.getString("description"));
+			chollo.setImage(rs.getString("image"));
 			chollo.setLink(rs.getString("link"));
 			chollo.setPrice(rs.getFloat("price"));
 			chollo.setIdu(rs.getInt("idu"));
@@ -36,7 +37,7 @@ public class JDBCCholloDAOImpl implements CholloDAO {
 			chollo.setLikes(rs.getInt("likes"));
 			chollo.setSoldout(rs.getInt("soldout"));
 			
-			logger.info("fetching chollos: "+chollo.getId()+" "+chollo.getTitle()+" "+chollo.getDescription()+ " " + chollo.getLink() + " " + chollo.getPrice() 
+			logger.info("fetching chollos: "+chollo.getId()+" "+chollo.getTitle()+" "+chollo.getDescription()+ " " + chollo.getLink() + " " + chollo.getImage()+ " " + chollo.getPrice() 
 						+ " " + chollo.getIdu() + " " + chollo.getIds() + " " + chollo.getLikes() + " " + chollo.getSoldout());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -59,6 +60,7 @@ public class JDBCCholloDAOImpl implements CholloDAO {
 				chollo.setId(rs.getInt("id"));
 				chollo.setTitle(rs.getString("title"));
 				chollo.setDescription(rs.getString("description"));
+				chollo.setImage(rs.getString("image"));
 				chollo.setLink(rs.getString("link"));
 				chollo.setPrice(rs.getFloat("price"));
 				chollo.setIdu(rs.getInt("idu"));
@@ -68,7 +70,7 @@ public class JDBCCholloDAOImpl implements CholloDAO {
 				
 				
 				chollos.add(chollo);
-				logger.info("fetching chollos: "+chollo.getId()+" "+chollo.getTitle()+" "+chollo.getDescription()+ " " + chollo.getLink() + " " + chollo.getPrice() 
+				logger.info("fetching chollos: "+chollo.getId()+" "+chollo.getTitle()+" "+chollo.getDescription()+ " " + chollo.getLink() + " " + chollo.getImage()+ " " + chollo.getPrice() 
 						+ " " + chollo.getIdu()+ " " + chollo.getIds() + " " + chollo.getLikes() + " " + chollo.getSoldout());
 								
 			}
@@ -96,6 +98,7 @@ public class JDBCCholloDAOImpl implements CholloDAO {
 				chollo.setId(rs.getInt("id"));
 				chollo.setTitle(rs.getString("title"));
 				chollo.setDescription(rs.getString("description"));
+				chollo.setImage(rs.getString("image"));
 				chollo.setLink(rs.getString("link"));
 				chollo.setPrice(rs.getFloat("price"));
 				chollo.setIdu(rs.getInt("idu"));
@@ -105,7 +108,7 @@ public class JDBCCholloDAOImpl implements CholloDAO {
 				
 				chollos.add(chollo);
 				
-				logger.info("fetching chollos by text in the title: "+chollo.getId()+" "+chollo.getTitle()+" "+chollo.getDescription()+ " " + chollo.getLink() + " " + chollo.getPrice() 
+				logger.info("fetching chollos by text in the title: "+chollo.getId()+" "+chollo.getTitle()+" "+chollo.getDescription()+ " " + chollo.getLink() + " " + chollo.getImage()+ " "+ chollo.getPrice() 
 				+  " " + chollo.getIdu()+ " " + chollo.getIds() + " " + chollo.getLikes() + " " + chollo.getSoldout());				
 				
 			}
@@ -134,6 +137,7 @@ public class JDBCCholloDAOImpl implements CholloDAO {
 				chollo.setId(rs.getInt("id"));
 				chollo.setTitle(rs.getString("title"));
 				chollo.setDescription(rs.getString("description"));
+				chollo.setImage(rs.getString("image"));
 				chollo.setLink(rs.getString("link"));
 				chollo.setPrice(rs.getFloat("price"));
 				chollo.setIdu(rs.getInt("idu"));
@@ -172,6 +176,7 @@ public class JDBCCholloDAOImpl implements CholloDAO {
 				chollo.setId(rs.getInt("id"));
 				chollo.setTitle(rs.getString("title"));
 				chollo.setDescription(rs.getString("description"));
+				chollo.setImage(rs.getString("image"));
 				chollo.setLink(rs.getString("link"));
 				chollo.setPrice(rs.getFloat("price"));
 				chollo.setIdu(rs.getInt("idu"));
@@ -211,6 +216,7 @@ public class JDBCCholloDAOImpl implements CholloDAO {
 				chollo.setId(rs.getInt("id"));
 				chollo.setTitle(rs.getString("title"));
 				chollo.setDescription(rs.getString("description"));
+				chollo.setImage(rs.getString("image"));
 				chollo.setLink(rs.getString("link"));
 				chollo.setPrice(rs.getFloat("price"));
 				chollo.setIdu(rs.getInt("idu"));
@@ -259,9 +265,9 @@ public class JDBCCholloDAOImpl implements CholloDAO {
 			
 			try {
 				stmt = conn.createStatement();
-				stmt.executeUpdate("INSERT INTO chollo (title,description,link,price,idu,ids,likes,soldout) VALUES('"
+				stmt.executeUpdate("INSERT INTO chollo (title,description,link,price,idu,ids,likes,soldout,image) VALUES('"
 									+chollo.getTitle()+"','"+chollo.getDescription()+"','" + chollo.getLink() + "'," 
-									+ chollo.getPrice() + "," + chollo.getIdu()+","+ chollo.getIds() +","+ chollo.getLikes() +","+ chollo.getSoldout() +")");
+									+ chollo.getPrice() + "," + chollo.getIdu()+","+ chollo.getIds() +","+ chollo.getLikes() +","+ chollo.getSoldout() +",'"+chollo.getImage()+"')");
 				
 								
 			} catch (SQLException e) {
@@ -276,7 +282,7 @@ public class JDBCCholloDAOImpl implements CholloDAO {
 				id=rs.getInt("seq");
 				if (id<=lastid) return -1;
 											
-				logger.info("CREATING Chollo("+id+"): "+chollo.getTitle()+" "+chollo.getDescription());
+				logger.info("CREATING Chollo("+id+") "+chollo.getTitle()+" "+chollo.getDescription());
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -302,7 +308,8 @@ public class JDBCCholloDAOImpl implements CholloDAO {
 				+", ids="+chollo.getIds()
 				+", likes="+chollo.getLikes()
 				+", soldout="+chollo.getSoldout()
-				+" WHERE id = "+chollo.getId());
+				+", image='"+chollo.getImage()
+				+"' WHERE id = "+chollo.getId());
 				logger.info("updating Chollo: "+chollo.getId()+" "+chollo.getTitle()+" "+chollo.getDescription());
 						
 				done= true;

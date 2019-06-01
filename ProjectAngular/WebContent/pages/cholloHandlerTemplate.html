@@ -8,7 +8,7 @@
 			<input type="text" class="form-control input-lg" name="title"
 				data-ng-model="cholloHandlerVM.newChollo.title">
 				<label class="few-chars" data-ng-show="cholloHandlerVM.functions.where('/editChollo/'+cholloHandlerVM.chollo.id)">
-				Title {{cholloHandlerVM.chollo.title}}</label>
+				Title: {{cholloHandlerVM.chollo.title}}</label>
 		</div>
 		<br> <span class="label label-default">Description: </span>
 		<div>
@@ -23,6 +23,13 @@
 				data-ng-model="cholloHandlerVM.newChollo.link">
 				<label class="few-chars" data-ng-show="cholloHandlerVM.functions.where('/editChollo/'+cholloHandlerVM.chollo.id)">
 				Link: {{cholloHandlerVM.chollo.link}}</label>
+		</div>
+		<br> <span class="label label-info">Image: </span>
+		<div>
+			<input type="url" class="form-control input-lg" name="image"
+				data-ng-model="cholloHandlerVM.newChollo.image">
+				<label class="few-chars" data-ng-show="cholloHandlerVM.functions.where('/editChollo/'+cholloHandlerVM.chollo.id)">
+				Image: {{cholloHandlerVM.chollo.image}}</label>
 		</div>
 		<br>
 	</div>

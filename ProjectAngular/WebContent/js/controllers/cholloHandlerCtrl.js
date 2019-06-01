@@ -5,12 +5,14 @@ angular.module('chollosApp')
 	cholloHandlerViewModel.chollo={
 			title: "",
 			description: "",
-			link: ""
+			link: "",
+			image: ""
 	};
 	cholloHandlerViewModel.newChollo={
 			title: "",
 			description: "",
-			link: ""
+			link: "",
+			image: ""
 	};
 	cholloHandlerViewModel.functions = {
 			where : function(route){
@@ -29,21 +31,25 @@ angular.module('chollosApp')
 			updateChollo : function() {
 				if(cholloHandlerViewModel.newChollo.title !== "")
 					cholloHandlerViewModel.chollo.title = cholloHandlerViewModel.newChollo.title
-				if(cholloHandlerViewModel.newChollo.description !== "")
-					cholloHandlerViewModel.chollo.description = cholloHandlerViewModel.newChollo.description
-				if(cholloHandlerViewModel.newChollo.link !== "")
-					cholloHandlerViewModel.chollo.link = cholloHandlerViewModel.newChollo.link
-				chollosFactory.putChollo(cholloHandlerViewModel.chollo)
-				.then(function(response){
-					console.log("Updating chollo with id:",cholloHandlerViewModel.chollo.id," Response:", response);
-				}, function(response){
-					console.log("Error updating chollo");
-				})
+					if(cholloHandlerViewModel.newChollo.description !== "")
+						cholloHandlerViewModel.chollo.description = cholloHandlerViewModel.newChollo.description
+						if(cholloHandlerViewModel.newChollo.link !== "")
+							cholloHandlerViewModel.chollo.link = cholloHandlerViewModel.newChollo.link
+							if(cholloHandlerViewModel.newChollo.image !== "")
+								cholloHandlerViewModel.chollo.image = cholloHandlerViewModel.newChollo.image
+								console.log(cholloHandlerViewModel.chollo.image)
+								chollosFactory.putChollo(cholloHandlerViewModel.chollo)
+								.then(function(response){
+									console.log("Updating chollo with id:",cholloHandlerViewModel.chollo.id," Response:", response);
+								}, function(response){
+									console.log("Error updating chollo");
+								})
 			},	
 			createChollo : function() {
 				cholloHandlerViewModel.chollo.title = cholloHandlerViewModel.newChollo.title
 				cholloHandlerViewModel.chollo.description = cholloHandlerViewModel.newChollo.description
 				cholloHandlerViewModel.chollo.link = cholloHandlerViewModel.newChollo.link
+				cholloHandlerViewModel.chollo.image = cholloHandlerViewModel.newChollo.image
 				console.log(cholloHandlerViewModel.chollo)
 				chollosFactory.postChollo(cholloHandlerViewModel.chollo)
 				.then(function(response){

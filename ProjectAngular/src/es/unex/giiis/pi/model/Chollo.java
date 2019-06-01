@@ -11,6 +11,7 @@ public class Chollo {
 	private String title;
 	private String description;
 	private String link;
+	private String image;
 	private float price;
 
 	private long idu;
@@ -104,6 +105,14 @@ public class Chollo {
 		// Compare the data members and return accordingly  
 		return Long.compare(id, c.id) == 0
 				&& Double.compare(id, c.id) == 0; 
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 

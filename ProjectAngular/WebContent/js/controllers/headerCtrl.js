@@ -5,7 +5,8 @@ angular.module('chollosApp')
 	headerViewModel.newUser={id: -1,
 			username: "", //This variable is for registering in the html form a new user, and I use this and not the user variable 
 			email: "",					   //because user would not have defined and I couldnt use user.username, user.email and user.password
-			password:""};
+			password:"",
+			avatar: ""};
 	headerViewModel.passwordConf="";
 	headerViewModel.functions = {
 			readUser : function() {
@@ -34,6 +35,8 @@ angular.module('chollosApp')
 					console.log("DIFFERENT PASSWORDS");
 			},
 			editUser : function() {
+				if(headerViewModel.newUser.avatar !== "")
+					headerViewModel.user.avatar = headerViewModel.newUser.avatar
 				if(headerViewModel.newUser.email !== "")
 					headerViewModel.user.email = headerViewModel.newUser.email
 				if(headerViewModel.newUser.password !== "")
