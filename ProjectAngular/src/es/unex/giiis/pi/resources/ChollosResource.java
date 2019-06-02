@@ -224,49 +224,6 @@ public class ChollosResource {
 		return res; 
 	}
 
-	/*
-	//POST that receives a new chollo via webform
-	@POST	  	 
-	@Consumes("application/x-www-form-urlencoded")
-	public Response post(MultivaluedMap<String, String> formParams,
-			@Context HttpServletRequest request) {	
-		Connection conn = (Connection) sc.getAttribute("dbConn");
-		CholloDAO cholloDao = new JDBCCholloDAOImpl();
-		cholloDao.setConnection(conn); 
-
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
-
-		Response res;
-
-		Chollo chollo = new Chollo();
-		chollo.setTitle(formParams.getFirst("title"));
-		chollo.setDescription(formParams.getFirst("description"));
-		chollo.setLink(formParams.getFirst("link"));
-		chollo.setPrice(Float.parseFloat(formParams.getFirst("price")));
-		chollo.setSoldout(0);
-
-		Map<String, String> messages = new HashMap<String, String>();
-		if ((!chollo.validate(messages))
-				||((!(user.getId() == chollo.getIdu()))))
-			throw new CustomBadRequestException("Errors in parameters");
-		//save chollo in DB
-		long id = cholloDao.add(chollo);
-
-		res = Response //return 201 and Location: /chollos/newid
-				.created(
-						uriInfo.getAbsolutePathBuilder()
-						.path(Long.toString(id))
-						.build())
-				.contentLocation(
-						uriInfo.getAbsolutePathBuilder()
-						.path(Long.toString(id))
-						.build())
-				.build();
-		return res;  
-	}
-	 */
-
 
 	@PUT
 	@Path("/{cholloid: [0-9]+}")

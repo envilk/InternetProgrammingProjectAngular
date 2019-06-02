@@ -22,8 +22,11 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+
+import es.unex.giiis.pi.dao.JDBCCholloDAOImpl;
 import es.unex.giiis.pi.dao.JDBCUserDAOImpl;
 import es.unex.giiis.pi.dao.UserDAO;
+import es.unex.giiis.pi.model.Chollo;
 import es.unex.giiis.pi.model.User;
 import es.unex.giiis.pi.resources.exceptions.CustomBadRequestException;
 
@@ -81,15 +84,15 @@ public class UsersResource {
 		Connection conn = (Connection) sc.getAttribute("dbConn");
 		UserDAO userDao = new JDBCUserDAOImpl();
 		userDao.setConnection(conn);
-			
+
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
-		
+
 		Response res;
 
 		Map<String, String> messages = new HashMap<String, String>();
 		long id;
-		
+
 		if ((!newUser.validateName(messages)) || (userDao.getUsername(newUser.getUsername()) != null))//An user can have same email but not same username
 			throw new CustomBadRequestException("Errors in parameters");
 		else {  
@@ -117,6 +120,11 @@ public class UsersResource {
 		UserDAO userDao = new JDBCUserDAOImpl();
 		userDao.setConnection(conn);
 
+		JDBCCholloDAOImpl cholloDao = new JDBCCholloDAOImpl();
+		cholloDao.setConnection(conn);
+
+		List<Chollo> chollos = cholloDao.getAll();
+
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 
@@ -124,6 +132,10 @@ public class UsersResource {
 		if(returnUser != null && user != null) { 
 			userDao.delete(returnUser.getId());
 			session.invalidate();
+			for (Chollo chollo : chollos) {
+				if(user.getId()==chollo.getIdu())
+					cholloDao.delete(chollo.getId());
+			}
 			return Response.noContent().build(); //204 no content
 		}
 		else throw new CustomBadRequestException("Error in user or id");	
