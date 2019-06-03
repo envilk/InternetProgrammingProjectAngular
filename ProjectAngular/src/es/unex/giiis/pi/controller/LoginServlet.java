@@ -55,12 +55,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 	String email = request.getParameter("email");
 	String password = request.getParameter("password");		
 
-	logger.info("credentials: "+email+" - "+password);
-
 	User user = userDao.getEmail(email);
-	logger.info(user.getEmail());
-	logger.info(user.getPassword());
-	logger.info(user.getUsername());
 
 	if ((user != null) 
 			&& (user.getPassword().equals(password)))
